@@ -78,7 +78,7 @@ dependencies {
         implementation 'org.tensorflow:tensorflow-lite-support:0.4.4'
 
         // ML Kit (on-device ML)
-        implementation 'com.google.mlkit:entity-extraction:16.0.0-beta6'
+        implementation 'com.google.mlkit:entity-extraction:16.0.0-beta4'
         implementation 'com.google.mlkit:translate:17.0.2'
 
         // Permissions
