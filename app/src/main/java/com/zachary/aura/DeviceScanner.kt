@@ -253,7 +253,7 @@ object DeviceScanner {
      */
     private fun getStorageUsed(): Long {
         val stat = android.os.StatFs(android.os.Environment.getExternalStorageDirectory().path)
-        return (stat.blockCount - stat.availableBlocks) * stat.blockSize
+        return (stat.blockCountLong - stat.availableBlocksLong) * stat.blockSizeLong
     }
 
     /**
@@ -261,6 +261,6 @@ object DeviceScanner {
      */
     private fun getStorageTotal(): Long {
         val stat = android.os.StatFs(android.os.Environment.getExternalStorageDirectory().path)
-        return stat.blockCount * stat.blockSize
+        return stat.blockCountLong * stat.blockSizeLong
     }
 }

@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
+import android.app.Notification
 import androidx.core.app.NotificationCompat
 import com.zachary.aura.MainActivity
 import com.zachary.aura.R
@@ -53,7 +54,7 @@ class AuraForegroundService : Service() {
     /**
      * Create notification
      */
-    private fun createNotification(): NotificationCompat.Notification {
+    private fun createNotification(): Notification {
         val intent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
             this,

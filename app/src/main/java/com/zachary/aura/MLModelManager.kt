@@ -5,7 +5,7 @@ import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
 import com.google.mlkit.nl.entityextraction.EntityExtraction
 import com.google.mlkit.nl.entityextraction.EntityExtractionParams
-import com.google.mlkit.speech.speechrecognizer.SpeechRecognitionOptions
+import com.google.mlkit.nl.entityextraction.EntityExtractorOptions
 import kotlinx.coroutines.*
 
 /**
@@ -128,13 +128,15 @@ object MLModelManager {
             val startTime = System.currentTimeMillis()
 
             return@withContext try {
-                val entityExtractor = EntityExtraction.getClient()
+                val entityExtractor = EntityExtraction.getClient(
+                    EntityExtractorOptions.Builder(EntityExtractorOptions.ENGLISH).build()
+                )
 
                 val params = EntityExtractionParams.Builder(text).build()
 
                 var entities = emptyList<String>()
-                entityExtractor.annotateEntities(params).addOnSuccessListener { result ->
-                    entities = result.map { it.text }
+                entityExtractor.annotate(params).addOnSuccessListener { result ->
+                    entities = result.map { it.annotatedText }
                 }
 
                 val latency = System.currentTimeMillis() - startTime
