@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Semi-transparent background -->
+    <View
+        android:id="@+id/overlay_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000" />
+
+    <!-- AURA Overlay Panel -->
+    <LinearLayout
+        android:id="@+id/overlay_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:background="#1a1f3a"
+        android:layout_gravity="bottom">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:background="#0f1535">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="AURA"
+                android:textSize="16sp"
+                android:textColor="#00ff41"
+                android:fontFamily="monospace"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/overlay_close"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:text="✕"
+                android:textSize="20sp"
+                android:textColor="#00ff41"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <!-- Input Area -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:background="#0a0e27">
+
+            <EditText
+                android:id="@+id/overlay_input"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:hint="Say or type a command..."
+                android:textColor="#ffffff"
+                android:textColorHint="#00aa22"
+                android:fontFamily="monospace"
+                android:background="@drawable/input_background"
+                android:paddingHorizontal="12dp"
+                android:textSize="12sp" />
+
+            <ImageButton
+                android:id="@+id/overlay_voice"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/voice_button"
+                android:contentDescription="Voice input"
+                android:scaleType="centerInside" />
+
+            <ImageButton
+                android:id="@+id/overlay_send"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/send_button"
+                android:contentDescription="Send command"
+                android:scaleType="centerInside" />
+        </LinearLayout>
+
+        <!-- Response Area -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="200dp">
+
+            <TextView
+                android:id="@+id/overlay_response"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ready for commands"
+                android:textColor="#ffffff"
+                android:fontFamily="monospace"
+                android:textSize="12sp"
+                android:padding="16dp"
+                android:background="#0a0e27" />
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>

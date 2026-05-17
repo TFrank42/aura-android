@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0a0e27">
+
+    <!-- Boot Sequence -->
+    <LinearLayout
+        android:id="@+id/boot_sequence"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#0a0e27"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AURA"
+            android:textSize="48sp"
+            android:textColor="#00ff41"
+            android:fontFamily="monospace"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adaptive Universal Runtime Agent"
+            android:textSize="14sp"
+            android:textColor="#00ff41"
+            android:fontFamily="monospace"
+            android:layout_marginTop="16dp" />
+
+        <ProgressBar
+            android:layout_width="200dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="32dp"
+            android:indeterminate="true"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:progressDrawable="@drawable/progress_bar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Initializing systems..."
+            android:textSize="12sp"
+            android:textColor="#00ff41"
+            android:fontFamily="monospace"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Author: Zachary McCulloch"
+            android:textSize="10sp"
+            android:textColor="#00aa22"
+            android:fontFamily="monospace"
+            android:layout_marginTop="32dp" />
+    </LinearLayout>
+
+    <!-- Main Interface -->
+    <LinearLayout
+        android:id="@+id/main_interface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#0a0e27"
+        android:visibility="gone">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:background="#0f1535">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="AURA"
+                android:textSize="20sp"
+                android:textColor="#00ff41"
+                android:fontFamily="monospace"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="●"
+                android:textSize="12sp"
+                android:textColor="#00ff41" />
+        </LinearLayout>
+
+        <!-- Content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Status Card -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="16dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SYSTEM STATUS"
+                        android:textSize="12sp"
+                        android:textColor="#00ff41"
+                        android:fontFamily="monospace"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/status_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ready for commands"
+                        android:textSize="14sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="monospace"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Features -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FEATURES"
+                    android:textSize="12sp"
+                    android:textColor="#00ff41"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✓ Device Scanner"
+                        android:textSize="12sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="monospace"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✓ Task Executor"
+                        android:textSize="12sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="monospace"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✓ ML Inference"
+                        android:textSize="12sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="monospace"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✓ Personal Learning"
+                        android:textSize="12sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="monospace"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✓ System Overlay"
+                        android:textSize="12sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="monospace" />
+                </LinearLayout>
+
+                <!-- Instructions -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ACTIVATION METHODS"
+                        android:textSize="12sp"
+                        android:textColor="#00ff41"
+                        android:fontFamily="monospace"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1. Say 'Hey AURA'"
+                        android:textSize="12sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="monospace"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2. Swipe bottom-right corner"
+                        android:textSize="12sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="monospace"
+                        android:layout_marginTop="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3. Long press volume button"
+                        android:textSize="12sp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="monospace"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Footer -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingVertical="12dp"
+            android:background="#0f1535">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AURA v1.0 • Author: Zachary McCulloch"
+                android:textSize="10sp"
+                android:textColor="#00aa22"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

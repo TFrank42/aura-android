@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AURA" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/aura_primary</item>
+        <item name="colorPrimaryDark">@color/aura_background</item>
+        <item name="colorAccent">@color/aura_primary</item>
+        <item name="android:windowBackground">@color/aura_background</item>
+        <item name="android:textColor">@color/aura_text</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/aura_surface</item>
+        <item name="android:navigationBarColor">@color/aura_surface</item>
+    </style>
+</resources>

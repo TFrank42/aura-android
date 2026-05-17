@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AURA</string>
+    <string name="app_description">Adaptive Universal Runtime Agent</string>
+    <string name="accessibility_service_description">AURA Accessibility Service - Provides system overlay and gesture detection</string>
+    <string name="device_admin_description">AURA Device Admin - Enables advanced system control</string>
+</resources>
