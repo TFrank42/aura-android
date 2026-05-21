@@ -5,7 +5,6 @@ export default function LayersLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        animationEnabled: true,
       }}
     >
       <Stack.Screen name="[id]" />
