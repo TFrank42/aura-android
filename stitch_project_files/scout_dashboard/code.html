@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AURA Scout Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Geist:wght@400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .pulse-glow {
+      box-shadow: 0 0 15px rgba(78, 222, 163, 0.4);
+      animation: pulse 2s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .scan-line {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(173, 198, 255, 0.2), transparent);
+      position: absolute;
+      animation: scan 3s linear infinite;
+    }
+    @keyframes scan {
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "on-tertiary-fixed": "#2a1700",
+                  "surface-container-highest": "#2e3545",
+                  "on-primary-fixed-variant": "#004493",
+                  "on-secondary": "#003824",
+                  "on-surface": "#dce2f7",
+                  "on-error-container": "#ffdad6",
+                  "primary-container": "#4b8eff",
+                  "on-background": "#dce2f7",
+                  "outline-variant": "#414755",
+                  "surface-container-high": "#232a3a",
+                  "on-secondary-fixed-variant": "#005236",
+                  "outline": "#8b90a0",
+                  "surface-tint": "#adc6ff",
+                  "surface-bright": "#323949",
+                  "primary": "#adc6ff",
+                  "secondary": "#4edea3",
+                  "surface-variant": "#2e3545",
+                  "tertiary-fixed": "#ffddb8",
+                  "on-secondary-container": "#00311f",
+                  "tertiary-container": "#ca8100",
+                  "on-tertiary-fixed-variant": "#653e00",
+                  "error-container": "#93000a",
+                  "on-tertiary": "#472a00",
+                  "on-primary-container": "#00285c",
+                  "error": "#ffb4ab",
+                  "primary-fixed": "#d8e2ff",
+                  "on-primary": "#002e69",
+                  "tertiary-fixed-dim": "#ffb95f",
+                  "on-surface-variant": "#c1c6d7",
+                  "surface-container-lowest": "#070e1d",
+                  "tertiary": "#ffb95f",
+                  "surface-container-low": "#141b2b",
+                  "secondary-container": "#00a572",
+                  "inverse-on-surface": "#293040",
+                  "secondary-fixed": "#6ffbbe",
+                  "secondary-fixed-dim": "#4edea3",
+                  "inverse-primary": "#005bc1",
+                  "on-tertiary-container": "#3e2400",
+                  "surface-container": "#191f2f",
+                  "on-secondary-fixed": "#002113",
+                  "background": "#0c1322",
+                  "surface-dim": "#0c1322",
+                  "surface": "#0c1322",
+                  "primary-fixed-dim": "#adc6ff",
+                  "on-error": "#690005",
+                  "inverse-surface": "#dce2f7",
+                  "on-primary-fixed": "#001a41"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.125rem",
+                  "lg": "0.25rem",
+                  "xl": "0.5rem",
+                  "full": "0.75rem"
+          },
+          "spacing": {
+                  "unit": "4px",
+                  "gutter": "16px",
+                  "margin": "24px",
+                  "container-max": "1440px"
+          },
+          "fontFamily": {
+                  "headline-lg": ["Geist"],
+                  "body-md": ["Geist"],
+                  "data-lg": ["JetBrains Mono"],
+                  "label-caps": ["JetBrains Mono"],
+                  "data-md": ["JetBrains Mono"],
+                  "headline-md": ["Geist"]
+          },
+          "fontSize": {
+                  "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                  "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                  "data-lg": ["18px", {"lineHeight": "24px", "fontWeight": "500"}],
+                  "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                  "data-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                  "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 z-50 bg-surface-container-low dark:bg-surface-container-low flex justify-between items-center w-full px-gutter h-14 border-b border-outline-variant dark:border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="monitoring">monitoring</span>
+<h1 class="font-headline-md text-headline-md tracking-tighter text-primary dark:text-primary">AURA Scout</h1>
+</div>
+<button class="hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors p-2 rounded-lg">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="pt-14 pb-24 px-gutter flex flex-col gap-unit">
+<!-- Hero: System Health Status -->
+<section class="mt-4 relative overflow-hidden bg-surface-container rounded-xl border border-outline-variant p-margin">
+<div class="scan-line"></div>
+<div class="flex justify-between items-end relative z-10">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">SYSTEM_STATUS</p>
+<h2 class="font-headline-lg text-headline-lg text-secondary flex items-center gap-3">
+            98% <span class="text-secondary font-headline-md">HEALTHY</span>
+</h2>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-secondary/30 flex items-center justify-center pulse-glow">
+<div class="w-4 h-4 bg-secondary rounded-full"></div>
+</div>
+</div>
+<div class="mt-4 flex gap-1 h-1">
+<div class="h-full w-full bg-secondary rounded-full"></div>
+<div class="h-full w-full bg-secondary rounded-full"></div>
+<div class="h-full w-full bg-secondary rounded-full"></div>
+<div class="h-full w-full bg-secondary rounded-full"></div>
+<div class="h-full w-1/2 bg-outline-variant rounded-full"></div>
+</div>
+</section>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-2 gap-3 mt-margin">
+<!-- CPU Load Card -->
+<div class="col-span-2 bg-surface-container-low border border-outline-variant p-unit px-3 py-3 rounded-lg relative">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CPU_LOAD</span>
+<span class="font-data-md text-data-md text-primary">12.4%</span>
+</div>
+<div class="h-16 w-full flex items-end gap-0.5">
+<!-- Sparkline representation -->
+<div class="bg-primary/20 hover:bg-primary w-full h-[20%] transition-all"></div>
+<div class="bg-primary/20 hover:bg-primary w-full h-[35%] transition-all"></div>
+<div class="bg-primary/20 hover:bg-primary w-full h-[25%] transition-all"></div>
+<div class="bg-primary/20 hover:bg-primary w-full h-[45%] transition-all"></div>
+<div class="bg-primary/40 hover:bg-primary w-full h-[60%] transition-all"></div>
+<div class="bg-primary/30 hover:bg-primary w-full h-[30%] transition-all"></div>
+<div class="bg-primary/50 hover:bg-primary w-full h-[75%] transition-all"></div>
+<div class="bg-primary hover:bg-primary w-full h-[55%] transition-all"></div>
+<div class="bg-primary/40 hover:bg-primary w-full h-[40%] transition-all"></div>
+<div class="bg-primary/20 hover:bg-primary w-full h-[20%] transition-all"></div>
+</div>
+</div>
+<!-- RAM Usage Card -->
+<div class="bg-surface-container-low border border-outline-variant p-3 rounded-lg flex flex-col items-center justify-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant self-start">RAM_UTIL</span>
+<div class="relative w-20 h-20 mt-2 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90">
+<circle class="text-outline-variant" cx="40" cy="40" fill="transparent" r="34" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary" cx="40" cy="40" fill="transparent" r="34" stroke="currentColor" stroke-dasharray="213" stroke-dashoffset="64" stroke-width="4"></circle>
+</svg>
+<span class="absolute font-data-md text-data-md text-primary">70%</span>
+</div>
+</div>
+<!-- Net I/O Card -->
+<div class="bg-surface-container-low border border-outline-variant p-3 rounded-lg">
+<span class="font-label-caps text-label-caps text-on-surface-variant">NET_IO</span>
+<div class="mt-4 space-y-3">
+<div class="flex justify-between items-center">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="arrow_upward">arrow_upward</span>
+<span class="font-data-md text-data-md">1.2 MB/s</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="arrow_downward">arrow_downward</span>
+<span class="font-data-md text-data-md">4.8 MB/s</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Collectors -->
+<section class="mt-margin mb-6">
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant">ACTIVE_COLLECTORS</h3>
+<span class="text-[10px] text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">LIVE</span>
+</div>
+<div class="space-y-2">
+<!-- Collector: CPU -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="memory">memory</span>
+<span class="font-data-md text-data-md uppercase">cpu</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary">ACTIVE</span>
+</div>
+<!-- Collector: Memory -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="storage">storage</span>
+<span class="font-data-md text-data-md uppercase">memory</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary">ACTIVE</span>
+</div>
+<!-- Collector: Disk -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="hard_drive">hard_drive</span>
+<span class="font-data-md text-data-md uppercase">disk</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary">ACTIVE</span>
+</div>
+<!-- Collector: Network -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="lan">lan</span>
+<span class="font-data-md text-data-md uppercase">network</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary">ACTIVE</span>
+</div>
+<!-- Collector: Hardware -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="developer_board">developer_board</span>
+<span class="font-data-md text-data-md uppercase">hardware</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary">ACTIVE</span>
+</div>
+<!-- Collector: Security -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error" data-icon="security">security</span>
+<span class="font-data-md text-data-md uppercase">security</span>
+</div>
+<span class="font-label-caps text-[10px] text-error">MONITORING</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar from JSON -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2 bg-surface-container-low dark:bg-surface-container-low border-t border-outline-variant dark:border-outline-variant">
+<!-- Metrics (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container dark:text-on-primary-container rounded-xl px-3 py-1 scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" data-weight="fill" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-caps text-label-caps mt-0.5">Metrics</span>
+</a>
+<!-- CPU -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+<span class="font-label-caps text-label-caps mt-0.5">CPU</span>
+</a>
+<!-- Memory -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="storage">storage</span>
+<span class="font-label-caps text-label-caps mt-0.5">Memory</span>
+</a>
+<!-- Net -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="lan">lan</span>
+<span class="font-label-caps text-label-caps mt-0.5">Net</span>
+</a>
+<!-- System -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-label-caps text-label-caps mt-0.5">System</span>
+</a>
+</nav>
+<script>
+    // Micro-interaction: Randomize metrics subtly for "live" feel
+    setInterval(() => {
+      const dataLabels = document.querySelectorAll('.font-data-md');
+      dataLabels.forEach(label => {
+        if (label.innerText.includes('%')) {
+          const base = parseFloat(label.innerText);
+          const noise = (Math.random() - 0.5) * 0.5;
+          label.innerText = (base + noise).toFixed(1) + '%';
+        }
+      });
+    }, 2000);
+  </script>
+</body></html>

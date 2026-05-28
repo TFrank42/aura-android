@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AURA Scout | Memory &amp; Disk</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-container-highest": "#2e3545",
+                    "on-primary-fixed-variant": "#004493",
+                    "on-secondary": "#003824",
+                    "on-surface": "#dce2f7",
+                    "on-error-container": "#ffdad6",
+                    "primary-container": "#4b8eff",
+                    "on-background": "#dce2f7",
+                    "outline-variant": "#414755",
+                    "surface-container-high": "#232a3a",
+                    "on-secondary-fixed-variant": "#005236",
+                    "outline": "#8b90a0",
+                    "surface-tint": "#adc6ff",
+                    "surface-bright": "#323949",
+                    "primary": "#adc6ff",
+                    "secondary": "#4edea3",
+                    "surface-variant": "#2e3545",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-container": "#00311f",
+                    "tertiary-container": "#ca8100",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "error-container": "#93000a",
+                    "on-tertiary": "#472a00",
+                    "on-primary-container": "#00285c",
+                    "error": "#ffb4ab",
+                    "primary-fixed": "#d8e2ff",
+                    "on-primary": "#002e69",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-surface-variant": "#c1c6d7",
+                    "surface-container-lowest": "#070e1d",
+                    "tertiary": "#ffb95f",
+                    "surface-container-low": "#141b2b",
+                    "secondary-container": "#00a572",
+                    "inverse-on-surface": "#293040",
+                    "secondary-fixed": "#6ffbbe",
+                    "secondary-fixed-dim": "#4edea3",
+                    "inverse-primary": "#005bc1",
+                    "on-tertiary-container": "#3e2400",
+                    "surface-container": "#191f2f",
+                    "on-secondary-fixed": "#002113",
+                    "background": "#0c1322",
+                    "surface-dim": "#0c1322",
+                    "surface": "#0c1322",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-error": "#690005",
+                    "inverse-surface": "#dce2f7",
+                    "on-primary-fixed": "#001a41"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "margin": "24px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Geist"],
+                    "data-lg": ["JetBrains Mono"],
+                    "label-caps": ["JetBrains Mono"],
+                    "data-md": ["JetBrains Mono"],
+                    "headline-md": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "data-lg": ["18px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "data-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0c1322;
+            color: #dce2f7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .scanline {
+            background: linear-gradient(to bottom, rgba(173, 198, 255, 0.03) 50%, rgba(0, 0, 0, 0) 50%);
+            background-size: 100% 4px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .metric-glow {
+            box-shadow: inset 0 0 10px rgba(173, 198, 255, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface-container-low dark:bg-surface-container-low docked full-width top-0 border-b border-outline-variant dark:border-outline-variant flex justify-between items-center w-full px-gutter h-14 fixed z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">monitoring</span>
+<h1 class="font-headline-md text-headline-md tracking-tighter text-primary dark:text-primary">AURA Scout</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors p-2 rounded-full">settings</button>
+</div>
+</header>
+<main class="pt-14 pb-24 px-4 space-y-4">
+<!-- Memory Section (Top Half) -->
+<section class="mt-4">
+<div class="flex items-center justify-between mb-2 px-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">VIRTUAL MEMORY</span>
+<span class="font-data-md text-data-md text-primary">64.2 GB TOTAL</span>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 metric-glow">
+<!-- Stacked Bar Chart -->
+<div class="space-y-4">
+<div class="h-10 w-full flex rounded-lg overflow-hidden border border-outline-variant bg-surface-container-lowest">
+<div class="bg-primary h-full w-[42%]" title="Used"></div>
+<div class="bg-secondary-container h-full w-[18%]" title="Buffered"></div>
+<div class="bg-tertiary-container h-full w-[22%]" title="Cached"></div>
+<div class="bg-surface-container-highest h-full w-[18%]" title="Free"></div>
+</div>
+<!-- Memory Legend & Breakdown -->
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col p-2 border-l-4 border-primary bg-surface-container-high rounded-r">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Used</span>
+<span class="font-data-lg text-data-lg text-on-surface">26.9 GB</span>
+</div>
+<div class="flex flex-col p-2 border-l-4 border-secondary-container bg-surface-container-high rounded-r">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Buffered</span>
+<span class="font-data-lg text-data-lg text-on-surface">11.5 GB</span>
+</div>
+<div class="flex flex-col p-2 border-l-4 border-tertiary-container bg-surface-container-high rounded-r">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Cached</span>
+<span class="font-data-lg text-data-lg text-on-surface">14.1 GB</span>
+</div>
+<div class="flex flex-col p-2 border-l-4 border-surface-container-highest bg-surface-container-high rounded-r">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Free</span>
+<span class="font-data-lg text-data-lg text-on-surface">11.7 GB</span>
+</div>
+</div>
+</div>
+<!-- Swap Usage -->
+<div class="mt-6 pt-4 border-t border-outline-variant">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SWAP USAGE</span>
+<span class="font-data-md text-data-md text-on-surface">2.1 GB / 8.0 GB</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[26%]"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Disk Partition Status (Bottom Half) -->
+<section>
+<div class="flex items-center justify-between mb-2 px-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">STORAGE &amp; I/O</span>
+<span class="font-data-md text-data-md text-secondary">SYSTEM HEALTH: OPTIMAL</span>
+</div>
+<div class="space-y-3">
+<!-- Partition Card: Root -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-3 flex items-start gap-4">
+<div class="bg-surface-container-high p-2 rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-primary">hard_drive</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex justify-between items-center">
+<span class="font-data-md text-data-md font-bold">/dev/nvme0n1p3</span>
+<span class="font-label-caps text-[10px] bg-secondary-container/20 text-secondary px-1.5 py-0.5 rounded border border-secondary-container/30">MOUNT: /</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<span class="block font-label-caps text-[10px] text-on-surface-variant">REMAINING</span>
+<span class="font-data-lg text-data-lg text-on-surface">412.8 GB</span>
+</div>
+<div>
+<span class="block font-label-caps text-[10px] text-on-surface-variant">I/O WAIT</span>
+<span class="font-data-lg text-data-lg text-secondary">0.04ms</span>
+</div>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[54%]"></div>
+</div>
+</div>
+</div>
+<!-- Partition Card: Data -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-3 flex items-start gap-4">
+<div class="bg-surface-container-high p-2 rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-tertiary">database</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex justify-between items-center">
+<span class="font-data-md text-data-md font-bold">/dev/sda1</span>
+<span class="font-label-caps text-[10px] bg-primary-container/20 text-primary px-1.5 py-0.5 rounded border border-primary-container/30">MOUNT: /data</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<span class="block font-label-caps text-[10px] text-on-surface-variant">REMAINING</span>
+<span class="font-data-lg text-data-lg text-on-surface">1.2 TB</span>
+</div>
+<div>
+<span class="block font-label-caps text-[10px] text-on-surface-variant">I/O WAIT</span>
+<span class="font-data-lg text-data-lg text-error">12.4ms</span>
+</div>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[82%]"></div>
+</div>
+</div>
+</div>
+<!-- Real-time Throughput -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 overflow-hidden relative">
+<div class="scanline absolute inset-0 pointer-events-none opacity-20"></div>
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">I/O Throughput</span>
+<div class="flex items-baseline gap-2">
+<span class="font-data-lg text-headline-md text-primary">142.4</span>
+<span class="font-label-caps text-on-surface-variant">MB/s READ</span>
+</div>
+</div>
+<div class="flex gap-1 h-12 items-end">
+<div class="w-1 bg-primary/40 h-[40%] rounded-full"></div>
+<div class="w-1 bg-primary/40 h-[60%] rounded-full"></div>
+<div class="w-1 bg-primary/40 h-[30%] rounded-full"></div>
+<div class="w-1 bg-primary/40 h-[80%] rounded-full"></div>
+<div class="w-1 bg-primary/40 h-[50%] rounded-full"></div>
+<div class="w-1 bg-primary h-[95%] rounded-full animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2 bg-surface-container-low dark:bg-surface-container-low border-t border-outline-variant dark:border-outline-variant">
+<!-- Metrics Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary transition-all">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Metrics</span>
+</button>
+<!-- CPU Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary transition-all">
+<span class="material-symbols-outlined">memory</span>
+<span class="font-label-caps text-label-caps">CPU</span>
+</button>
+<!-- Memory Tab (Active) -->
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container dark:text-on-primary-container rounded-xl px-3 py-1 scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">storage</span>
+<span class="font-label-caps text-label-caps">Memory</span>
+</button>
+<!-- Net Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary transition-all">
+<span class="material-symbols-outlined">lan</span>
+<span class="font-label-caps text-label-caps">Net</span>
+</button>
+<!-- System Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary transition-all">
+<span class="material-symbols-outlined">info</span>
+<span class="font-label-caps text-label-caps">System</span>
+</button>
+</nav>
+<script>
+        // Simple interval to simulate data fluctuations
+        setInterval(() => {
+            const ioValue = document.querySelector('.text-headline-md');
+            if (ioValue) {
+                const current = parseFloat(ioValue.innerText);
+                const jitter = (Math.random() - 0.5) * 5;
+                ioValue.innerText = (current + jitter).toFixed(1);
+            }
+        }, 2000);
+
+        // Mobile active state interaction feedback
+        document.querySelectorAll('nav button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('nav button').forEach(b => {
+                    b.className = "flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary transition-all";
+                });
+                btn.className = "flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container dark:text-on-primary-container rounded-xl px-3 py-1 scale-90 transition-transform duration-200";
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AURA AI - Performance History Trends</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#e9ddff",
+                        "on-primary-fixed-variant": "#004f54",
+                        "primary": "#dbfcff",
+                        "on-error": "#690005",
+                        "surface-tint": "#00dbe9",
+                        "on-background": "#e5e2e1",
+                        "primary-container": "#00f0ff",
+                        "secondary": "#d1bcff",
+                        "surface-container": "#201f1f",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-container": "#d9d7ed",
+                        "primary-fixed": "#7df4ff",
+                        "tertiary-fixed": "#e3e0f7",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "secondary-fixed-dim": "#d1bcff",
+                        "surface-container-highest": "#353534",
+                        "surface": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "error-container": "#93000a",
+                        "on-tertiary": "#2f2f40",
+                        "surface-variant": "#353534",
+                        "on-secondary-fixed-variant": "#5700c9",
+                        "on-secondary": "#3c0090",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed": "#1a1a2a",
+                        "on-tertiary-container": "#5e5d6f",
+                        "tertiary-fixed-dim": "#c6c4da",
+                        "on-secondary-fixed": "#23005b",
+                        "secondary-container": "#7000ff",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#00363a",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-secondary-container": "#ddcdff",
+                        "on-tertiary-fixed-variant": "#464557",
+                        "surface-bright": "#393939",
+                        "on-primary-fixed": "#002022",
+                        "inverse-primary": "#006970",
+                        "inverse-on-surface": "#313030",
+                        "on-primary-container": "#006970",
+                        "on-surface-variant": "#b9cacb",
+                        "outline": "#849495",
+                        "outline-variant": "#3b494b",
+                        "surface-dim": "#131313",
+                        "tertiary": "#f8f4ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "mono-metrics": ["Geist Mono"],
+                        "body-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-sm": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.04em", "fontWeight": "600"}],
+                        "mono-metrics": ["13px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(32, 31, 31, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-glow-primary {
+            filter: drop-shadow(0 0 8px rgba(0, 219, 233, 0.4));
+        }
+        .neon-glow-secondary {
+            filter: drop-shadow(0 0 12px rgba(112, 0, 255, 0.4));
+        }
+        .chart-container {
+            position: relative;
+            background: linear-gradient(180deg, rgba(19, 19, 19, 0) 0%, rgba(112, 0, 255, 0.05) 100%);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col hide-scrollbar">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/10 flex justify-between items-center px-gutter py-stack-sm h-16">
+<div class="flex items-center gap-4">
+<button class="text-on-surface hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-headline-sm font-headline-sm font-bold tracking-tighter text-on-surface">Performance History Trends</h1>
+</div>
+<div class="flex items-center gap-4 text-secondary">
+<button class="material-symbols-outlined hover:text-primary transition-colors active:opacity-70">sensors</button>
+<button class="material-symbols-outlined hover:text-primary transition-colors active:opacity-70">settings</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="flex-1 mt-16 pb-24 px-gutter max-w-5xl mx-auto w-full animate-in fade-in duration-700">
+<!-- Main Chart Section -->
+<section class="mt-stack-lg">
+<div class="glass-card rounded-xl p-stack-md flex flex-col gap-4 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
+<div class="flex justify-between items-center px-2">
+<h2 class="text-headline-sm font-headline-sm">24-Hour Usage Trends</h2>
+<div class="flex gap-4 items-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-fixed-dim neon-glow-primary"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">CPU</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim neon-glow-secondary"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">RAM</span>
+</div>
+</div>
+</div>
+<div class="chart-container h-64 w-full rounded-lg border border-white/5 relative overflow-hidden flex flex-col justify-between p-4">
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+<div class="border-t border-white/10 w-full"></div>
+<div class="border-t border-white/10 w-full"></div>
+<div class="border-t border-white/10 w-full"></div>
+<div class="border-t border-white/10 w-full"></div>
+</div>
+<!-- SVG Chart Overlay (Simulated) -->
+<div class="absolute inset-0 px-4 py-8">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 400 150">
+<!-- RAM Line -->
+<path class="text-secondary neon-glow-secondary opacity-60" d="M0,120 Q50,130 100,110 T200,80 T300,50 T400,90" fill="none" stroke="currentColor" stroke-width="2"></path>
+<!-- CPU Line -->
+<path class="text-primary neon-glow-primary" d="M0,140 Q60,110 120,125 T240,60 T360,100 T400,115" fill="none" stroke="currentColor" stroke-width="2"></path>
+<!-- Highlight Point -->
+<circle class="animate-pulse" cx="280" cy="55" fill="#00dbe9" r="4"></circle>
+<rect fill="#201f1f" height="40" rx="6" stroke="#3b494b" width="100" x="230" y="5"></rect>
+<text class="text-[10px] font-mono-metrics" fill="#dbfcff" x="240" y="22">CPU: 78%</text>
+<text class="text-[9px] font-mono-metrics" fill="#b9cacb" x="240" y="36">at 3:45 PM</text>
+</svg>
+</div>
+<!-- Labels -->
+<div class="flex justify-between text-label-md font-label-md text-on-surface-variant mt-auto">
+<span>12 AM</span>
+<span>6 AM</span>
+<span>12 PM</span>
+<span>6 PM</span>
+<span>Now</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Metrics Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-gutter mt-stack-md">
+<!-- Peak Usage -->
+<div class="glass-card rounded-xl p-stack-md group hover:bg-white/5 transition-all">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm">Peak Usage</h3>
+</div>
+<div class="space-y-stack-sm mb-4">
+<div class="flex justify-between items-center">
+<span class="text-body-md text-on-surface-variant">CPU</span>
+<span class="text-headline-sm font-mono-metrics text-primary">92%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-md text-on-surface-variant">RAM</span>
+<span class="text-headline-sm font-mono-metrics text-secondary">88%</span>
+</div>
+</div>
+<div class="pt-stack-sm border-t border-white/5">
+<span class="text-label-md font-label-md text-on-surface-variant">at 4:12 PM today</span>
+</div>
+</div>
+<!-- Average Load -->
+<div class="glass-card rounded-xl p-stack-md group hover:bg-white/5 transition-all">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm">Average Load</h3>
+</div>
+<div class="space-y-stack-sm mb-4">
+<div class="flex justify-between items-center">
+<span class="text-body-md text-on-surface-variant">CPU</span>
+<span class="text-headline-sm font-mono-metrics text-primary">45%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-md text-on-surface-variant">RAM</span>
+<span class="text-headline-sm font-mono-metrics text-secondary">60%</span>
+</div>
+</div>
+<div class="pt-stack-sm border-t border-white/5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-success-600 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"></span>
+<span class="text-label-md font-label-md text-on-surface-variant">Stable over last 24h</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Smart Insights -->
+<section class="mt-stack-lg">
+<div class="flex items-center gap-3 mb-gutter">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<h2 class="text-headline-sm font-headline-sm">Smart Insights</h2>
+</div>
+<div class="space-y-stack-md">
+<!-- Insight Card 1 -->
+<div class="glass-card rounded-xl p-stack-md flex gap-gutter items-start border-l-4 border-error/50">
+<div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center text-error flex-shrink-0">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+<div>
+<p class="text-body-md text-on-surface">
+<span class="text-secondary font-bold">High memory usage</span> detected during browsing. Consider closing unused tabs or background processes to improve responsiveness.
+                        </p>
+<button class="mt-stack-sm text-label-md font-label-md text-primary uppercase tracking-widest hover:underline">Optimize Now</button>
+</div>
+</div>
+<!-- Insight Card 2 -->
+<div class="glass-card rounded-xl p-stack-md flex gap-gutter items-start border-l-4 border-primary/50">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div>
+<p class="text-body-md text-on-surface">
+<span class="text-primary font-bold">System optimization</span> successful. Background processes reduced by 15%, increasing available thread count.
+                        </p>
+<p class="mt-unit text-label-md font-label-md text-on-surface-variant">2 hours ago</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Visual Decorative Area -->
+<div class="mt-stack-lg opacity-40">
+<img class="w-full h-48 object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-1000 cursor-pointer" data-alt="A highly detailed close-up of a futuristic CPU motherboard with intricate glowing neon pathways in cyan and violet. The scene is shot from a low angle with a shallow depth of field, emphasizing the complex architectural layers of a high-performance computer processor. Soft volumetric lighting and particulate effects create a cinematic, ethereal atmosphere in a deep charcoal environment, reflecting the Aura AI brand's premium and advanced technological identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS3JvYzp0B0XtpvI3DGAMhyI_VsvYkUWmT-l4xKsOCoa49KW1ZMWN62t_bhhohS004PRrmdpF5Xa7mPoHoNMYg9HMcPRYiepdb914GbeZk5UarUJDpmwe2sxkv8_Nj-vsy3Ml87oTC5Z4tV_vjPxyukeTlxykIlG8hhtGgotMv62dHLZ_nxWgKw1KCtUHaGyAkkxOdDRACLQ_Wk_6BO9PSbcDChbUmuTx4bO1J_GDRqqiMzRC0Pu4eDZS_2R2EJG2OnUjg92iUy2TK"/>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-stack-sm pb-10 bg-surface-container-lowest/90 backdrop-blur-2xl rounded-t-xl border-t border-white/5 shadow-[0_-8px_30px_rgb(112,0,255,0.1)]">
+<a class="flex flex-col items-center gap-unit text-on-surface-variant hover:text-primary-fixed transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-md font-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-secondary-fixed-dim drop-shadow-[0_0_12px_rgba(209,188,255,0.4)] active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-label-md font-label-md">Diagnostics</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-on-surface-variant hover:text-primary-fixed transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-label-md font-label-md">AI Chat</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-on-surface-variant hover:text-primary-fixed transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Settings</span>
+</a>
+</nav>
+<!-- Floating Micro-interaction Effect (Canvas Background Particles) -->
+<canvas class="fixed inset-0 -z-10 pointer-events-none opacity-20" id="ambient-canvas"></canvas>
+<script>
+        // Simple ambient particle effect for background
+        const canvas = document.getElementById('ambient-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.init();
+            }
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.2;
+                this.speedY = (Math.random() - 0.5) * 0.2;
+                this.color = Math.random() > 0.5 ? '#00dbe9' : '#d1bcff';
+                this.opacity = Math.random() * 0.5;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+        }
+
+        function setup() {
+            resize();
+            for (let i = 0; i < 50; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        setup();
+        animate();
+    </script>
+</body></html>

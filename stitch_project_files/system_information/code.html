@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AURA Scout - System Info</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-container-highest": "#2e3545",
+                    "on-primary-fixed-variant": "#004493",
+                    "on-secondary": "#003824",
+                    "on-surface": "#dce2f7",
+                    "on-error-container": "#ffdad6",
+                    "primary-container": "#4b8eff",
+                    "on-background": "#dce2f7",
+                    "outline-variant": "#414755",
+                    "surface-container-high": "#232a3a",
+                    "on-secondary-fixed-variant": "#005236",
+                    "outline": "#8b90a0",
+                    "surface-tint": "#adc6ff",
+                    "surface-bright": "#323949",
+                    "primary": "#adc6ff",
+                    "secondary": "#4edea3",
+                    "surface-variant": "#2e3545",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-secondary-container": "#00311f",
+                    "tertiary-container": "#ca8100",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "error-container": "#93000a",
+                    "on-tertiary": "#472a00",
+                    "on-primary-container": "#00285c",
+                    "error": "#ffb4ab",
+                    "primary-fixed": "#d8e2ff",
+                    "on-primary": "#002e69",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-surface-variant": "#c1c6d7",
+                    "surface-container-lowest": "#070e1d",
+                    "tertiary": "#ffb95f",
+                    "surface-container-low": "#141b2b",
+                    "secondary-container": "#00a572",
+                    "inverse-on-surface": "#293040",
+                    "secondary-fixed": "#6ffbbe",
+                    "secondary-fixed-dim": "#4edea3",
+                    "inverse-primary": "#005bc1",
+                    "on-tertiary-container": "#3e2400",
+                    "surface-container": "#191f2f",
+                    "on-secondary-fixed": "#002113",
+                    "background": "#0c1322",
+                    "surface-dim": "#0c1322",
+                    "surface": "#0c1322",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-error": "#690005",
+                    "inverse-surface": "#dce2f7",
+                    "on-primary-fixed": "#001a41"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "margin": "24px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Geist"],
+                    "body-md": ["Geist"],
+                    "data-lg": ["JetBrains Mono"],
+                    "label-caps": ["JetBrains Mono"],
+                    "data-md": ["JetBrains Mono"],
+                    "headline-md": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "data-lg": ["18px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "data-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #0c1322;
+            color: #dce2f7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .terminal-scanline {
+            background: linear-gradient(to bottom, rgba(173, 198, 255, 0.03) 50%, rgba(0, 0, 0, 0) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .pulse-secondary {
+            animation: pulse-secondary 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-secondary {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top App Bar -->
+<header class="bg-surface-container-low dark:bg-surface-container-low border-b border-outline-variant dark:border-outline-variant flex justify-between items-center w-full px-gutter h-14 fixed top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="monitoring">monitoring</span>
+<h1 class="font-headline-md text-headline-md tracking-tighter text-primary dark:text-primary">AURA Scout</h1>
+</div>
+<button class="hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors p-2 rounded-xl active:opacity-80 active:scale-95 transition-all duration-150">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="pt-20 pb-24 px-gutter max-w-md mx-auto min-h-screen relative">
+<div class="terminal-scanline fixed inset-0 z-0"></div>
+<!-- System Hero Section -->
+<section class="relative z-10 mb-8">
+<div class="flex items-end justify-between mb-2">
+<span class="font-label-caps text-label-caps text-primary opacity-70">SYSTEM_ENTITY</span>
+<span class="font-label-caps text-label-caps text-secondary flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary pulse-secondary"></span>
+                    LIVE_CONNECTION
+                </span>
+</div>
+<div class="bg-surface-container p-5 rounded-xl border border-outline-variant relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl" data-icon="info" style="font-variation-settings: 'FILL' 1;">info</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Scout Node Alpha</h2>
+<div class="flex items-center gap-2 font-data-md text-data-md text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="fingerprint">fingerprint</span>
+<span class="font-label-caps tracking-widest">DEVICE_ID:</span>
+<span class="text-primary">AUR-99X-SCOUT-042</span>
+</div>
+</div>
+</section>
+<!-- Hardware Specs Bento -->
+<div class="grid grid-cols-2 gap-3 mb-6 relative z-10">
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant flex flex-col justify-between h-32">
+<span class="font-label-caps text-label-caps text-on-surface-variant">HARDWARE MODEL</span>
+<div>
+<div class="font-data-lg text-data-lg text-on-surface">ARM64_V8A</div>
+<div class="font-data-md text-data-md text-primary opacity-80">Snapdragon 8 Gen 3</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant flex flex-col justify-between h-32">
+<span class="font-label-caps text-label-caps text-on-surface-variant">OS KERNEL</span>
+<div>
+<div class="font-data-lg text-data-lg text-on-surface">6.1.43-aura</div>
+<div class="font-data-md text-data-md text-primary opacity-80">Linux x86_64</div>
+</div>
+</div>
+</div>
+<!-- Detailed Info Rows -->
+<section class="bg-surface-container p-4 rounded-xl border border-outline-variant mb-6 relative z-10">
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="timer">timer</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">UPTIME</span>
+</div>
+<span class="font-data-md text-data-md text-on-surface">14d 06h 22m 11s</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="memory">memory</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">LOAD_AVG</span>
+</div>
+<span class="font-data-md text-data-md text-on-surface">0.42 / 0.38 / 0.44</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="public">public</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">NETWORK_IP</span>
+</div>
+<span class="font-data-md text-data-md text-on-surface">192.168.1.104</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="update">update</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">LAST_SYNC</span>
+</div>
+<span class="font-data-md text-data-md text-secondary">3s ago</span>
+</div>
+</div>
+</section>
+<!-- Module Status -->
+<section class="relative z-10">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3 flex items-center justify-between">
+<span>SCOUT_MODULE_STATUS</span>
+<span class="text-secondary">5/5 HEALTHY</span>
+</h3>
+<div class="space-y-2">
+<!-- Module Card 1 -->
+<div class="bg-surface-container-high/50 p-3 rounded-lg border border-outline-variant flex items-center justify-between group hover:border-secondary transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<div class="font-data-md text-data-md text-on-surface">CORE_ENGINE</div>
+<div class="text-[10px] font-label-caps text-on-surface-variant">V2.4.1-STABLE</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary opacity-50 group-hover:opacity-100" data-icon="bolt">bolt</span>
+</div>
+<!-- Module Card 2 -->
+<div class="bg-surface-container-high/50 p-3 rounded-lg border border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<div class="font-data-md text-data-md text-on-surface">TELEMETRY_BRIDGE</div>
+<div class="text-[10px] font-label-caps text-on-surface-variant">ACTIVE</div>
+</div>
+</div>
+</div>
+<!-- Module Card 3 -->
+<div class="bg-surface-container-high/50 p-3 rounded-lg border border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<div class="font-data-md text-data-md text-on-surface">LOG_SCRAPER</div>
+<div class="text-[10px] font-label-caps text-on-surface-variant">LISTENING</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- System Visual Decor -->
+<div class="mt-10 opacity-40">
+<div class="h-[1px] bg-outline-variant w-full relative">
+<div class="absolute -top-[3px] left-1/4 w-2 h-2 bg-primary rounded-full"></div>
+</div>
+<div class="flex justify-between mt-1 px-1">
+<span class="font-label-caps text-[8px]">0x0000FF</span>
+<span class="font-label-caps text-[8px]">AURA_OS_NATIVE</span>
+<span class="font-label-caps text-[8px]">100%_NOMINAL</span>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2 bg-surface-container-low dark:bg-surface-container-low border-t border-outline-variant dark:border-outline-variant">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary transition-all">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-label-caps">Metrics</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary transition-all">
+<span class="material-symbols-outlined mb-1" data-icon="memory">memory</span>
+<span class="font-label-caps text-label-caps">CPU</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary transition-all">
+<span class="material-symbols-outlined mb-1" data-icon="storage">storage</span>
+<span class="font-label-caps text-label-caps">Memory</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary transition-all">
+<span class="material-symbols-outlined mb-1" data-icon="lan">lan</span>
+<span class="font-label-caps text-label-caps">Net</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container dark:text-on-primary-container rounded-xl px-3 py-1 scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="info" style="font-variation-settings: 'FILL' 1;">info</span>
+<span class="font-label-caps text-label-caps">System</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction: Active system values update simulation
+        setInterval(() => {
+            const upElements = document.querySelectorAll('.font-data-md.text-on-surface');
+            upElements.forEach(el => {
+                if(el.textContent.includes('s')) {
+                    // This is just a visual flicker simulation
+                    el.classList.add('opacity-50');
+                    setTimeout(() => el.classList.remove('opacity-50'), 100);
+                }
+            });
+        }, 3000);
+    </script>
+</body></html>

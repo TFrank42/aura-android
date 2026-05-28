@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AURA Scout | CPU Monitor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Geist:wght@400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0c1322;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #414755;
+        }
+        .gauge-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.05); }
+        }
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(173, 198, 255, 0) 0%, rgba(173, 198, 255, 0.05) 50%, rgba(173, 198, 255, 0) 100%);
+            position: absolute;
+            top: -100px;
+            animation: scanline-move 8s linear infinite;
+        }
+        @keyframes scanline-move {
+            0% { top: -100px; }
+            100% { top: 100%; }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed": "#2a1700",
+                      "surface-container-highest": "#2e3545",
+                      "on-primary-fixed-variant": "#004493",
+                      "on-secondary": "#003824",
+                      "on-surface": "#dce2f7",
+                      "on-error-container": "#ffdad6",
+                      "primary-container": "#4b8eff",
+                      "on-background": "#dce2f7",
+                      "outline-variant": "#414755",
+                      "surface-container-high": "#232a3a",
+                      "on-secondary-fixed-variant": "#005236",
+                      "outline": "#8b90a0",
+                      "surface-tint": "#adc6ff",
+                      "surface-bright": "#323949",
+                      "primary": "#adc6ff",
+                      "secondary": "#4edea3",
+                      "surface-variant": "#2e3545",
+                      "tertiary-fixed": "#ffddb8",
+                      "on-secondary-container": "#00311f",
+                      "tertiary-container": "#ca8100",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#472a00",
+                      "on-primary-container": "#00285c",
+                      "error": "#ffb4ab",
+                      "primary-fixed": "#d8e2ff",
+                      "on-primary": "#002e69",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "on-surface-variant": "#c1c6d7",
+                      "surface-container-lowest": "#070e1d",
+                      "tertiary": "#ffb95f",
+                      "surface-container-low": "#141b2b",
+                      "secondary-container": "#00a572",
+                      "inverse-on-surface": "#293040",
+                      "secondary-fixed": "#6ffbbe",
+                      "secondary-fixed-dim": "#4edea3",
+                      "inverse-primary": "#005bc1",
+                      "on-tertiary-container": "#3e2400",
+                      "surface-container": "#191f2f",
+                      "on-secondary-fixed": "#002113",
+                      "background": "#0c1322",
+                      "surface-dim": "#0c1322",
+                      "surface": "#0c1322",
+                      "primary-fixed-dim": "#adc6ff",
+                      "on-error": "#690005",
+                      "inverse-surface": "#dce2f7",
+                      "on-primary-fixed": "#001a41"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "gutter": "16px",
+                      "margin": "24px",
+                      "container-max": "1440px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Geist"],
+                      "body-md": ["Geist"],
+                      "data-lg": ["JetBrains Mono"],
+                      "label-caps": ["JetBrains Mono"],
+                      "data-md": ["JetBrains Mono"],
+                      "headline-md": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "data-lg": ["18px", {"lineHeight": "24px", "fontWeight": "500"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "data-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface-container-low border-b border-outline-variant fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-14">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="monitoring">monitoring</span>
+<h1 class="font-headline-md text-headline-md tracking-tighter text-primary">AURA Scout</h1>
+</div>
+<button class="hover:bg-surface-container-high transition-colors p-2 rounded-lg">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="pt-20 pb-24 px-gutter max-w-lg mx-auto relative">
+<div class="scanline pointer-events-none opacity-20"></div>
+<!-- Central Gauge Section -->
+<section class="mb-8 flex flex-col items-center">
+<div class="relative w-56 h-56 flex items-center justify-center">
+<!-- Circular Gauge SVG -->
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="112" cy="112" fill="transparent" r="90" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary transition-all duration-1000 ease-out" cx="112" cy="112" fill="transparent" r="90" stroke="currentColor" stroke-dasharray="565" stroke-dashoffset="180" stroke-linecap="butt" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">TOTAL UTILIZATION</span>
+<div class="flex items-baseline">
+<span class="font-headline-lg text-[48px] leading-tight text-primary">68</span>
+<span class="font-headline-md text-headline-md text-primary opacity-60 ml-1">%</span>
+</div>
+<div class="mt-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/10 border border-secondary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-caps text-[10px] text-secondary">STABLE</span>
+</div>
+</div>
+<!-- Outer Glow -->
+<div class="absolute w-48 h-48 rounded-full border border-primary/20 gauge-pulse"></div>
+</div>
+</section>
+<!-- Technical Readings Grid -->
+<section class="grid grid-cols-2 gap-3 mb-8">
+<div class="bg-surface-container-low border border-outline-variant p-3 rounded-lg flex flex-col">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]" data-icon="bolt">bolt</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">FREQUENCY</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-data-lg text-data-lg text-primary">4.20</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">GHz</span>
+</div>
+<div class="mt-2 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-3/4"></div>
+</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant p-3 rounded-lg flex flex-col">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]" data-icon="thermostat">thermostat</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">TEMPERATURE</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-data-lg text-data-lg text-secondary">52</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">°C</span>
+</div>
+<div class="mt-2 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/2"></div>
+</div>
+</div>
+</section>
+<!-- Logical Cores Breakout -->
+<section class="mb-8">
+<div class="flex justify-between items-end mb-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant">LOGICAL CORES (8)</h3>
+<span class="font-data-md text-xs text-primary/60">UPDATED: 250ms</span>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<!-- Core Items -->
+<script>
+                    const coreValues = [82, 45, 12, 67, 91, 34, 55, 78];
+                    coreValues.forEach((val, i) => {
+                        document.write(`
+                            <div class="bg-surface-container-low border border-outline-variant p-2 flex flex-col gap-2 rounded">
+                                <span class="font-label-caps text-[9px] text-on-surface-variant">C${i}</span>
+                                <div class="relative h-12 w-full bg-surface-container-highest overflow-hidden">
+                                    <div class="absolute bottom-0 w-full bg-primary/40" style="height: ${val}%"></div>
+                                    <div class="absolute bottom-0 w-full bg-primary h-0.5"></div>
+                                </div>
+                                <span class="font-data-md text-[10px] text-center ${val > 80 ? 'text-primary' : 'text-on-surface'}">${val}%</span>
+                            </div>
+                        `);
+                    });
+                </script>
+</div>
+</section>
+<!-- Top Consumers List -->
+<section class="mb-8">
+<div class="flex items-center gap-2 mb-4 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="list_alt">list_alt</span>
+<h3 class="font-label-caps text-label-caps">TOP CONSUMERS</h3>
+</div>
+<div class="space-y-1">
+<!-- Process Row 1 -->
+<div class="flex items-center justify-between p-3 bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="font-label-caps text-primary text-[10px]">ND</span>
+</div>
+<div class="flex flex-col">
+<span class="font-data-md text-on-surface text-sm">node</span>
+<span class="font-label-caps text-[9px] text-on-surface-variant">PID: 48201</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<span class="font-data-md text-primary text-sm">42.8%</span>
+<span class="font-label-caps text-[9px] text-on-surface-variant">1.2 GB</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Process Row 2 -->
+<div class="flex items-center justify-between p-3 bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary/10 flex items-center justify-center border border-secondary/20">
+<span class="font-label-caps text-secondary text-[10px]">PY</span>
+</div>
+<div class="flex flex-col">
+<span class="font-data-md text-on-surface text-sm">python3</span>
+<span class="font-label-caps text-[9px] text-on-surface-variant">PID: 59122</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<span class="font-data-md text-on-surface text-sm">18.2%</span>
+<span class="font-label-caps text-[9px] text-on-surface-variant">450 MB</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<!-- Process Row 3 -->
+<div class="flex items-center justify-between p-3 bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/10 flex items-center justify-center border border-primary-container/20">
+<span class="font-label-caps text-primary-container text-[10px]">SC</span>
+</div>
+<div class="flex flex-col">
+<span class="font-data-md text-on-surface text-sm">scout</span>
+<span class="font-label-caps text-[9px] text-on-surface-variant">PID: 1042</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end">
+<span class="font-data-md text-on-surface text-sm">7.4%</span>
+<span class="font-label-caps text-[9px] text-on-surface-variant">88 MB</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 bg-surface-container-highest border border-outline-variant text-on-surface-variant font-label-caps text-[11px] hover:text-primary transition-all">
+                VIEW ALL PROCESSES
+            </button>
+</section>
+<!-- System Architecture Metadata -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-4 overflow-hidden relative">
+<div class="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[64px]" data-icon="memory">memory</span>
+</div>
+<h4 class="font-label-caps text-label-caps text-primary mb-3">SYSTEM HARDWARE</h4>
+<div class="space-y-3">
+<div class="flex justify-between border-b border-outline-variant/30 pb-2">
+<span class="text-xs text-on-surface-variant font-data-md">PROCESSOR</span>
+<span class="text-xs text-on-surface font-data-md">ARMv8-A (M2 Ultra)</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/30 pb-2">
+<span class="text-xs text-on-surface-variant font-data-md">CORES</span>
+<span class="text-xs text-on-surface font-data-md">24-Core (16P / 8E)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-xs text-on-surface-variant font-data-md">L3 CACHE</span>
+<span class="text-xs text-on-surface font-data-md">48 MB</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2 bg-surface-container-low border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-[10px] mt-1">Metrics</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="memory" style="font-variation-settings: 'FILL' 1;">memory</span>
+<span class="font-label-caps text-[10px] mt-1">CPU</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="storage">storage</span>
+<span class="font-label-caps text-[10px] mt-1">Memory</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="lan">lan</span>
+<span class="font-label-caps text-[10px] mt-1">Net</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-label-caps text-[10px] mt-1">System</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions: Randomize core values slightly for "live" feel
+        setInterval(() => {
+            const percentages = document.querySelectorAll('main section:nth-child(4) .font-data-md');
+            percentages.forEach(p => {
+                const current = parseInt(p.innerText);
+                const delta = Math.floor(Math.random() * 7) - 3;
+                let next = Math.max(5, Math.min(98, current + delta));
+                p.innerText = next + '%';
+                
+                // Update bar height
+                const bar = p.previousElementSibling.firstElementChild;
+                bar.style.height = next + '%';
+                
+                if(next > 80) p.classList.add('text-primary');
+                else p.classList.remove('text-primary');
+            });
+
+            // Update frequency slightly
+            const freq = document.querySelector('section:nth-child(3) .text-primary');
+            if (freq) {
+                const fVal = (4.15 + Math.random() * 0.1).toFixed(2);
+                freq.innerText = fVal;
+            }
+        }, 1500);
+
+        // Simulated haptic feedback for bottom nav
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(10);
+                }
+            });
+        });
+    </script>
+</body></html>

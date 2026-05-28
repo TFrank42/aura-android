@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AURA Scout - AI Core</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+        @keyframes float-orb {
+            0%, 100% { transform: translateY(0px) scale(1); filter: blur(20px); }
+            50% { transform: translateY(-15px) scale(1.05); filter: blur(30px); }
+        }
+        @keyframes neural-stream {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100%); }
+        }
+        .neural-glow {
+            box-shadow: 0 0 40px rgba(0, 219, 233, 0.15);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(28, 27, 27, 0.6);
+            border: 0.5px solid rgba(185, 202, 203, 0.2);
+        }
+        .terminal-scroll::-webkit-scrollbar {
+            width: 2px;
+        }
+        .terminal-scroll::-webkit-scrollbar-thumb {
+            background: #00dbe9;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#7701d0",
+                        "error": "#ffb4ab",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed-variant": "#6700b5",
+                        "on-secondary-fixed": "#2c0051",
+                        "inverse-on-surface": "#313030",
+                        "surface-bright": "#3a3939",
+                        "on-surface-variant": "#b9cacb",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-background": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "surface-container": "#201f1f",
+                        "background": "#131313",
+                        "surface-container-highest": "#353534",
+                        "secondary": "#dcb8ff",
+                        "surface-container-low": "#1c1b1b",
+                        "inverse-surface": "#e5e2e1",
+                        "surface": "#131313",
+                        "surface-dim": "#131313",
+                        "secondary-fixed": "#efdbff",
+                        "on-primary": "#00363a",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "outline-variant": "#3b494b",
+                        "primary-fixed": "#7df4ff",
+                        "inverse-primary": "#006970",
+                        "primary-container": "#00f0ff",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#004f54",
+                        "on-primary-container": "#006970",
+                        "tertiary-fixed": "#e5e2e1",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "on-error-container": "#ffdad6",
+                        "outline": "#849495",
+                        "surface-tint": "#00dbe9",
+                        "tertiary": "#f8f5f5",
+                        "tertiary-container": "#dcd9d8",
+                        "on-secondary": "#480081",
+                        "surface-variant": "#353534",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary-container": "#dcb7ff",
+                        "on-error": "#690005",
+                        "secondary-fixed-dim": "#dcb8ff",
+                        "on-primary-fixed": "#002022",
+                        "primary": "#dbfcff",
+                        "on-tertiary-container": "#5f5e5e",
+                        "on-tertiary": "#313030"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "ai-thought-lg": ["JetBrains Mono"],
+                        "headline-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "ai-thought-sm": ["JetBrains Mono"],
+                        "body-md": ["Geist"],
+                        "headline-lg-mobile": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "ai-thought-lg": ["15px", {"lineHeight": "1.7", "letterSpacing": "0px", "fontWeight": "400"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "ai-thought-sm": ["13px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-24 lg:pb-0 overflow-x-hidden select-none">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-gutter py-unit h-16 w-full z-50 fixed top-0 border-b border-outline-variant bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="memory">memory</span>
+<span class="font-label-caps text-label-caps font-bold tracking-widest text-secondary">NEURAL_OS_v4.2</span>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-high transition-all duration-150 p-2 rounded-full" data-icon="terminal">terminal</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-high transition-all duration-150 p-2 rounded-full" data-icon="notifications">notifications</span>
+</div>
+</header>
+<!-- Sidebar (Desktop) -->
+<nav class="fixed left-0 top-0 h-full hidden lg:flex flex-col z-40 h-screen w-64 border-r border-outline-variant bg-surface-container-lowest">
+<div class="p-6 mt-16">
+<h1 class="font-headline-md text-headline-md font-black text-secondary">SYSTEM_COMMAND</h1>
+</div>
+<div class="flex-1 px-2 space-y-1">
+<div class="text-on-surface-variant hover:text-on-surface px-4 py-3 flex items-center gap-3 cursor-pointer hover:bg-surface-container transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-caps text-label-caps">Metrics</span>
+</div>
+<div class="bg-surface-container-highest text-secondary border-l-2 border-secondary px-4 py-3 flex items-center gap-3 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="psychology" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-caps text-label-caps">AI Core</span>
+</div>
+<div class="text-on-surface-variant hover:text-on-surface px-4 py-3 flex items-center gap-3 cursor-pointer hover:bg-surface-container transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="processor">processing_cluster</span>
+<span class="font-label-caps text-label-caps">CPU</span>
+</div>
+<div class="text-on-surface-variant hover:text-on-surface px-4 py-3 flex items-center gap-3 cursor-pointer hover:bg-surface-container transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+<span class="font-label-caps text-label-caps">System</span>
+</div>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="lg:ml-64 pt-20 px-4 md:px-8 max-w-5xl mx-auto space-y-6">
+<!-- Neural Construct Area -->
+<section class="relative w-full aspect-square md:aspect-video flex items-center justify-center overflow-hidden rounded-xl border border-outline-variant glass-panel">
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,219,233,0.05),transparent_70%)]"></div>
+<!-- The Construct -->
+<div class="relative z-10 w-48 h-48 md:w-64 md:h-64">
+<div class="absolute inset-0 bg-primary-fixed-dim opacity-20 rounded-full blur-[40px] animate-[float-orb_6s_infinite_ease-in-out]"></div>
+<div class="absolute inset-0 border-2 border-primary-fixed-dim/30 rounded-full animate-[pulse-ring_4s_infinite_ease-out]"></div>
+<div class="absolute inset-4 border border-secondary/40 rounded-full animate-[pulse-ring_5s_infinite_ease-out_reverse]"></div>
+<!-- Core Orb -->
+<div class="absolute inset-12 bg-gradient-to-tr from-secondary-container to-primary-container rounded-full shadow-[0_0_60px_rgba(0,240,255,0.4)] flex items-center justify-center">
+<span class="material-symbols-outlined text-background text-5xl md:text-6xl animate-pulse" data-icon="tempest" style="font-variation-settings: 'FILL' 1;">storm</span>
+</div>
+<!-- Neural Particles (Simulated) -->
+<div class="absolute -top-10 left-1/2 w-1 h-1 bg-primary rounded-full animate-ping"></div>
+<div class="absolute bottom-10 -right-5 w-1 h-1 bg-secondary rounded-full animate-ping delay-700"></div>
+<div class="absolute top-1/2 -left-10 w-1 h-1 bg-primary rounded-full animate-ping delay-1000"></div>
+</div>
+<!-- Status HUD Overlay -->
+<div class="absolute top-4 left-4 text-left">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-tighter">Current State</p>
+<p class="font-headline-md text-headline-md text-primary font-bold">SYNTHESIS_ACTIVE</p>
+</div>
+<div class="absolute bottom-4 right-4 text-right">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Uptime: 142:12:05</p>
+<p class="font-label-sm text-label-sm text-secondary">Confidence Score: 98.4%</p>
+</div>
+</section>
+<!-- Cognitive Load Gauges -->
+<section class="grid grid-cols-3 gap-4">
+<div class="glass-panel p-4 flex flex-col items-center justify-center space-y-2 rounded-xl">
+<div class="relative w-16 h-16">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="175" stroke-dashoffset="40" stroke-width="4"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-[10px] font-label-sm text-primary">76%</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-center uppercase tracking-widest">Logic Synthesis</span>
+</div>
+<div class="glass-panel p-4 flex flex-col items-center justify-center space-y-2 rounded-xl">
+<div class="relative w-16 h-16">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-secondary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="175" stroke-dashoffset="110" stroke-width="4"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-[10px] font-label-sm text-secondary">34%</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-center uppercase tracking-widest">Pattern Rec</span>
+</div>
+<div class="glass-panel p-4 flex flex-col items-center justify-center space-y-2 rounded-xl">
+<div class="relative w-16 h-16">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary-fixed-dim" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="175" stroke-dashoffset="20" stroke-width="4"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-[10px] font-label-sm text-primary-fixed-dim">88%</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-center uppercase tracking-widest">Neural Flux</span>
+</div>
+</section>
+<!-- Heuristic Stream (Terminal) -->
+<section class="glass-panel rounded-xl overflow-hidden border border-outline-variant">
+<div class="bg-surface-container px-4 py-2 flex items-center justify-between border-b border-outline-variant">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Heuristic Stream</span>
+<div class="flex gap-1">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+</div>
+</div>
+<div class="p-4 h-48 overflow-y-auto terminal-scroll font-ai-thought-sm text-ai-thought-sm text-primary/80 space-y-1">
+<div class="flex gap-2">
+<span class="text-on-surface-variant">12:04:11</span>
+<span class="text-secondary">[OK]</span>
+<span>Optimizing packet routing across Node Beta...</span>
+</div>
+<div class="flex gap-2">
+<span class="text-on-surface-variant">12:04:12</span>
+<span class="text-error">[WARN]</span>
+<span class="text-error">Anomalous CPU spike detected in Node Alpha</span>
+</div>
+<div class="flex gap-2">
+<span class="text-on-surface-variant">12:04:14</span>
+<span class="text-primary">[INFO]</span>
+<span>Re-balancing resource harvesting parameters</span>
+</div>
+<div class="flex gap-2">
+<span class="text-on-surface-variant">12:04:15</span>
+<span class="text-secondary">[OK]</span>
+<span>Threat neutralization sub-routines idling</span>
+</div>
+<div class="flex gap-2">
+<span class="text-on-surface-variant">12:04:18</span>
+<span class="text-primary">[EXEC]</span>
+<span>Logic Synthesis bypass enabled at 0.7 temperature</span>
+</div>
+<div class="flex gap-2 opacity-50">
+<span class="text-on-surface-variant">12:04:21</span>
+<span class="text-secondary">[OK]</span>
+<span>Awaiting next heuristic burst...</span>
+</div>
+</div>
+</section>
+<!-- Core Autonomy Controls -->
+<section class="glass-panel rounded-xl p-6 space-y-4">
+<h3 class="font-label-caps text-label-caps text-secondary tracking-[0.2em]">Core Autonomy</h3>
+<div class="space-y-4">
+<!-- Toggle 1 -->
+<div class="flex items-center justify-between p-3 border border-outline-variant rounded-lg bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold text-on-surface">Auto-Scaling</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Dynamic node expansion</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle 2 -->
+<div class="flex items-center justify-between p-3 border border-outline-variant rounded-lg bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold text-on-surface">Threat Neutralization</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Automatic firewall escalation</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<!-- Toggle 3 -->
+<div class="flex items-center justify-between p-3 border border-outline-variant rounded-lg bg-surface-container-low">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-bold text-on-surface">Resource Harvesting</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Background token aggregation</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-fixed-dim"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Spacer for Bottom Nav -->
+<div class="h-10"></div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 lg:hidden bg-surface-container-low border-t border-outline-variant">
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary active:scale-95 transition-transform duration-75">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-caps text-label-caps">Metrics</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary bg-surface-container-highest rounded-xl p-2 shadow-[0_0_10px_rgba(78,222,163,0.3)] active:scale-95 transition-transform duration-75">
+<span class="material-symbols-outlined" data-icon="psychology" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-caps text-label-caps">AI Core</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary active:scale-95 transition-transform duration-75">
+<span class="material-symbols-outlined" data-icon="processor">processing_cluster</span>
+<span class="font-label-caps text-label-caps">CPU</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary active:scale-95 transition-transform duration-75">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+<span class="font-label-caps text-label-caps">System</span>
+</div>
+</nav>
+<!-- FAB (Only on main dashboard core) -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-secondary-container text-white rounded-full flex items-center justify-center shadow-xl lg:bottom-12 lg:right-12 z-30 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="bolt" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</button>
+<script>
+        // Micro-interaction: Randomize terminal updates
+        const messages = [
+            "Syncing neural weights...",
+            "Encrypting data streams...",
+            "Node Zeta responding with 12ms latency",
+            "Refining pattern recognition heuristic...",
+            "AI Core operating within nominal thermal limits"
+        ];
+        
+        const scrollContainer = document.querySelector('.terminal-scroll');
+        
+        setInterval(() => {
+            const time = new Date().toLocaleTimeString('en-GB', { hour12: false });
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 animate-in fade-in slide-in-from-left-2 duration-500';
+            div.innerHTML = `<span class="text-on-surface-variant">${time}</span><span class="text-primary">[AUTO]</span><span>${msg}</span>`;
+            scrollContainer.appendChild(div);
+            scrollContainer.scrollTop = scrollContainer.scrollHeight;
+            
+            // Keep container clean
+            if(scrollContainer.children.length > 20) {
+                scrollContainer.removeChild(scrollContainer.firstChild);
+            }
+        }, 3000);
+    </script>
+</body></html>

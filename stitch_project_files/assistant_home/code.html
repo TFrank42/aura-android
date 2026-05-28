@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>AURA AI Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#e9ddff",
+                        "on-primary-fixed-variant": "#004f54",
+                        "primary": "#dbfcff",
+                        "on-error": "#690005",
+                        "surface-tint": "#00dbe9",
+                        "on-background": "#e5e2e1",
+                        "primary-container": "#00f0ff",
+                        "secondary": "#d1bcff",
+                        "surface-container": "#201f1f",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-container": "#d9d7ed",
+                        "primary-fixed": "#7df4ff",
+                        "tertiary-fixed": "#e3e0f7",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "secondary-fixed-dim": "#d1bcff",
+                        "surface-container-highest": "#353534",
+                        "surface": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "error-container": "#93000a",
+                        "on-tertiary": "#2f2f40",
+                        "surface-variant": "#353534",
+                        "on-secondary-fixed-variant": "#5700c9",
+                        "on-secondary": "#3c0090",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed": "#1a1a2a",
+                        "on-tertiary-container": "#5e5d6f",
+                        "tertiary-fixed-dim": "#c6c4da",
+                        "on-secondary-fixed": "#23005b",
+                        "secondary-container": "#7000ff",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#00363a",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-secondary-container": "#ddcdff",
+                        "on-tertiary-fixed-variant": "#464557",
+                        "surface-bright": "#393939",
+                        "on-primary-fixed": "#002022",
+                        "inverse-primary": "#006970",
+                        "inverse-on-surface": "#313030",
+                        "on-primary-container": "#006970",
+                        "on-surface-variant": "#b9cacb",
+                        "outline": "#849495",
+                        "outline-variant": "#3b494b",
+                        "surface-dim": "#131313",
+                        "tertiary": "#f8f4ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "mono-metrics": ["Geist Mono"],
+                        "body-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-sm": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.04em", "fontWeight": "600"}],
+                        "mono-metrics": ["13px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.6; filter: blur(40px); }
+            50% { transform: scale(1.1); opacity: 0.9; filter: blur(60px); }
+        }
+        .aura-orb-glow {
+            background: radial-gradient(circle, #7000ff 0%, #00f0ff 100%);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .search-glow {
+            box-shadow: 0 0 30px rgba(112, 0, 255, 0.2);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary/30 min-h-screen overflow-x-hidden pb-24">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/10 flex justify-between items-center px-gutter py-stack-sm h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">blur_on</span>
+<h1 class="text-headline-sm font-headline-sm font-bold tracking-tighter text-on-surface">AURA AI</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors scale-95 active:opacity-70 transition-all">sensors</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/10">
+<img alt="Alex Chen" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a young man with a focused expression, Alex Chen, set against a dark, minimalist tech background. The lighting is dramatic and moody, with subtle violet and cyan highlights on his features, reflecting the digital glow of high-end AI software. The overall aesthetic is clean, premium, and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgzDyESqyip3A3PpPNeoiSdihG4rAJiXVI2R9t3IGorLN1pejeTtsefDWooTY_2QYoiInHXGBk1H3PkplkwnXX0tiO5TEBbHjDOKMb51YWS2_COO2KAib-8Cxd5TKGwlFArXwTLI7Jp00bKt3ttQRxZQ0O8USZzby6uEmHK7aKxqn7Yhe2duayMMj-0mHY4B3_t6FRufk3Ii_mMTFd2LhfKZibv1ni5ldjKkWCao6yjmKqq12N7qhfigVTKurLv-5mm5vDkJtBtqWU"/>
+</div>
+</div>
+</header>
+<main class="pt-24 px-gutter flex flex-col gap-stack-lg max-w-lg mx-auto">
+<!-- Welcome Section -->
+<section class="flex flex-col gap-unit">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-label-md font-label-md text-on-surface-variant tracking-widest">SYSTEM READY</p>
+<h2 class="text-headline-lg font-headline-lg mt-1">Good morning,<br/>Alex</h2>
+</div>
+<div class="glass-card rounded-xl px-4 py-2 flex flex-col items-end">
+<span class="text-label-md font-label-md text-on-surface-variant">Active Sessions</span>
+<span class="text-mono-metrics font-mono-metrics text-secondary">2 tabs, 1 task</span>
+</div>
+</div>
+</section>
+<!-- AI Orb Hero Section -->
+<section class="relative h-64 flex items-center justify-center my-stack-md">
+<div class="absolute aura-orb-glow w-48 h-48 rounded-full z-0"></div>
+<div class="relative z-10 w-40 h-40 rounded-full glass-card flex items-center justify-center border-white/20">
+<div class="w-24 h-24 rounded-full bg-gradient-to-br from-primary via-secondary to-secondary-container opacity-90 animate-pulse flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-on-primary-container" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+</div>
+<!-- Data Stream Particles (Atmospheric) -->
+<div class="absolute inset-0 pointer-events-none" id="particles"></div>
+</section>
+<!-- Diagnostic Gauges -->
+<section class="grid grid-cols-2 gap-stack-md">
+<div class="glass-card rounded-2xl p-stack-md flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md text-on-surface-variant">CPU LOAD</span>
+<span class="text-mono-metrics font-mono-metrics text-primary-fixed">12%</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[12%]"></div>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-stack-md flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-label-md font-label-md text-on-surface-variant">MEM SWAP</span>
+<span class="text-mono-metrics font-mono-metrics text-secondary">4.2 GB</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-secondary-container w-[45%]"></div>
+</div>
+</div>
+</section>
+<!-- Smart Shortcuts Bento Grid -->
+<section class="flex flex-col gap-stack-md">
+<h3 class="text-label-md font-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">bolt</span> SMART SHORTCUTS
+            </h3>
+<div class="grid grid-cols-2 gap-stack-md">
+<button class="glass-card rounded-2xl p-stack-md flex flex-col gap-3 text-left hover:scale-[1.02] active:scale-95 transition-all">
+<div class="w-10 h-10 rounded-xl bg-secondary-container/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">summarize</span>
+</div>
+<div>
+<p class="text-body-md font-body-md font-bold">Summarize Page</p>
+<p class="text-label-md font-label-md text-on-surface-variant">Extract key insights</p>
+</div>
+</button>
+<button class="glass-card rounded-2xl p-stack-md flex flex-col gap-3 text-left hover:scale-[1.02] active:scale-95 transition-all">
+<div class="w-10 h-10 rounded-xl bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">data_thresholding</span>
+</div>
+<div>
+<p class="text-body-md font-body-md font-bold">Extract Data</p>
+<p class="text-label-md font-label-md text-on-surface-variant">Parse tables &amp; lists</p>
+</div>
+</button>
+<button class="glass-card rounded-2xl p-stack-md flex flex-col gap-3 text-left hover:scale-[1.02] active:scale-95 transition-all">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface">translate</span>
+</div>
+<div>
+<p class="text-body-md font-body-md font-bold">Translate &amp; Read</p>
+<p class="text-label-md font-label-md text-on-surface-variant">Multi-lang voice</p>
+</div>
+</button>
+<button class="glass-card rounded-2xl p-stack-md flex flex-col gap-3 text-left hover:scale-[1.02] active:scale-95 transition-all">
+<div class="w-10 h-10 rounded-xl bg-error-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-error">monitoring</span>
+</div>
+<div>
+<p class="text-body-md font-body-md font-bold">Price History</p>
+<p class="text-label-md font-label-md text-on-surface-variant">Track value shifts</p>
+</div>
+</button>
+</div>
+</section>
+<!-- Suggested for You Section -->
+<section class="flex flex-col gap-stack-md">
+<h3 class="text-label-md font-label-md text-on-surface-variant">SUGGESTED WORKFLOWS</h3>
+<div class="flex overflow-x-auto gap-stack-md no-scrollbar -mx-gutter px-gutter">
+<div class="min-w-[280px] glass-card rounded-3xl p-stack-md flex flex-col gap-stack-md relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-stack-sm">
+<span class="text-[10px] px-2 py-0.5 rounded-full bg-primary/15 text-primary-fixed border border-primary/20 font-bold">OPTIMIZED</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-3xl">mark_as_unread</span>
+</div>
+<div>
+<p class="text-body-lg font-body-lg font-bold">Inbox Triage</p>
+<p class="text-label-md font-label-md text-on-surface-variant">Auto-sort priorities</p>
+</div>
+</div>
+<div class="flex gap-2">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border border-background bg-surface-container"></div>
+<div class="w-6 h-6 rounded-full border border-background bg-surface-container-highest"></div>
+</div>
+<span class="text-label-md font-label-md text-on-surface-variant flex items-center">+12 rules active</span>
+</div>
+</div>
+<div class="min-w-[280px] glass-card rounded-3xl p-stack-md flex flex-col gap-stack-md relative overflow-hidden">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">analytics</span>
+</div>
+<div>
+<p class="text-body-lg font-body-lg font-bold">Weekly Report</p>
+<p class="text-label-md font-label-md text-on-surface-variant">Generated 2h ago</p>
+</div>
+</div>
+<div class="h-12 w-full bg-white/5 rounded-lg flex items-end px-2 gap-1 pb-1">
+<div class="flex-1 bg-secondary/40 h-[40%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary/40 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary/40 h-[90%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary/40 h-[70%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary/40 h-[85%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating AI Search Bar -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-lg z-40">
+<div class="glass-card rounded-full p-1.5 flex items-center gap-3 search-glow border-secondary/20 group focus-within:border-secondary transition-all">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<input class="bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant/50 w-full text-body-md" placeholder="Ask me anything or enter a URL" type="text"/>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:text-secondary transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-2xl border-t border-white/5 shadow-[0_-8px_30px_rgb(112,0,255,0.1)] rounded-t-xl flex justify-around items-center pt-stack-sm pb-6">
+<a class="flex flex-col items-center gap-unit text-secondary-fixed-dim drop-shadow-[0_0_12px_rgba(209,188,255,0.4)] transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-md font-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-on-surface-variant hover:text-primary-fixed transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-label-md font-label-md">Diagnostics</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-on-surface-variant hover:text-primary-fixed transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-label-md font-label-md">AI Chat</span>
+</a>
+<a class="flex flex-col items-center gap-unit text-on-surface-variant hover:text-primary-fixed transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Settings</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Particle background for AI Orb
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 15;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'absolute w-1 h-1 rounded-full bg-primary/40 pointer-events-none';
+            
+            // Random positioning
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            
+            particle.style.left = `${x}%`;
+            particle.style.top = `${y}%`;
+            
+            // Random animation
+            const duration = 2 + Math.random() * 4;
+            const delay = Math.random() * 2;
+            
+            particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
+            
+            particlesContainer.appendChild(particle);
+        }
+
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes float {
+                0% { transform: translate(0, 0); opacity: 0.2; }
+                100% { transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px); opacity: 0.8; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Pulsing Search Glow Interaction
+        const searchBar = document.querySelector('input');
+        const searchContainer = searchBar.closest('.glass-card');
+        
+        searchBar.addEventListener('focus', () => {
+            searchContainer.classList.add('search-glow-active');
+            searchContainer.style.boxShadow = '0 0 50px rgba(112, 0, 255, 0.4)';
+        });
+
+        searchBar.addEventListener('blur', () => {
+            searchContainer.classList.remove('search-glow-active');
+            searchContainer.style.boxShadow = '0 0 30px rgba(112, 0, 255, 0.2)';
+        });
+    </script>
+</body></html>
