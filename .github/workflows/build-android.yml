@@ -42,7 +42,7 @@ jobs:
         
         with:
         
-          node-version: '18'
+          node-version: '22'
           
           cache: 'pnpm'
           
